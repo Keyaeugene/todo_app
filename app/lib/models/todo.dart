@@ -9,4 +9,5 @@ class Todo {
     return Todo(
         id: json['id'], title: json['title'], description: json['description']);
   }
+  dynamic toJson() => {'id': id, 'title': title, 'description': description};
 }

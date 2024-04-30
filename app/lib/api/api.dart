@@ -13,12 +13,22 @@ class TodoProvider with ChangeNotifier {
     return [..._todos];
   }
 
+  void addTodo(Todo todo) async {
+    final response = await http.post('http://10.0.2.2:8000/apis/v1/' as Uri,
+        headers: {"Content-Type": "application/json"}, body: json.encode(todo));
+    if (response.statusCode == 201) {
+      _todos.add(todo);
+      notifyListeners();
+    }
+  }
+
   fetchTasks() async {
     const url = 'http://10.0.2.2:8000/apis/v1/?format=json';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as List;
       _todos = data.map<Todo>((json) => Todo.fromJson(json)).toList();
+      notifyListeners();
     }
   }
 }
