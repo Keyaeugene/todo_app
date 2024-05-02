@@ -19,7 +19,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     final String desVal = todoDesController.text;
 
     if (textVal.isNotEmpty && desVal.isNotEmpty) {
-      final Todo todo = Todo(title: textVal, description: desVal, id: 0);
+      final Todo todo = Todo(title: textVal, description: desVal, id: 1);
       Provider.of<TodoProvider>(context, listen: false).addTodo(todo);
 
       Navigator.pop(context);
@@ -29,8 +29,16 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[400],
       appBar: AppBar(
-        title: const Text('Add Todo'),
+        backgroundColor: Colors.grey,
+        title: const Text(
+          'Add Todo',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         elevation: 0,
       ),
       body: ListView(
@@ -55,9 +63,16 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               ),
               const SizedBox(height: 20),
               FloatingActionButton(
-                backgroundColor: const Color.fromARGB(150, 29, 170, 1),
+                backgroundColor: Colors.black,
                 onPressed: onAdd,
-                child: const Text('Add'),
+                child: const Text(
+                  'Add',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),

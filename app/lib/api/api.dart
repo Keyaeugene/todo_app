@@ -14,10 +14,24 @@ class TodoProvider with ChangeNotifier {
   }
 
   void addTodo(Todo todo) async {
-    final response = await http.post('http://10.0.2.2:8000/apis/v1/' as Uri,
-        headers: {"Content-Type": "application/json"}, body: json.encode(todo));
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/apis/v1/'),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(todo),
+    );
+
     if (response.statusCode == 201) {
+      todo.id = json.decode(response.body)['id'];
       _todos.add(todo);
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteTodo(Todo todo) async {
+    final response = await http
+        .delete(Uri.parse('http://10.0.2.2:8000/apis/v1/${todo.id}/'));
+    if (response.statusCode == 204) {
+      _todos.remove(todo);
       notifyListeners();
     }
   }
